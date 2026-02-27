@@ -1,0 +1,32 @@
+version: "3.8"
+
+services:
+  frontend:
+    build: ./client
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./client/src:/app/src  # hot reload — edit files locally, reflects in container
+    depends_on:
+      - backend
+
+  backend:
+    build: ./server
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./server/src:/app/src  # hot reload for backend too
+    env_file:
+      - .env
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:6        # no custom Dockerfile needed, we use the official image directly
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db   # named volume so your data persists even if container restarts
+
+volumes:
+  mongo_data:
