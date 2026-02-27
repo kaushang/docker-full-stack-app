@@ -5,12 +5,12 @@ function App() {
   const [dbStatus, setDbStatus] = useState("checking...");
 
   useEffect(() => {
-    fetch("http://localhost:5000/")
+    fetch("/api/")
       .then((res) => res.json())
       .then((data) => setBackendStatus(data.status))
       .catch(() => setBackendStatus("unreachable"));
 
-    fetch("http://localhost:5000/db-status")
+    fetch("/api/db-status")
       .then((res) => res.json())
       .then((data) => setDbStatus(data.database))
       .catch(() => setDbStatus("unreachable"));
@@ -18,7 +18,7 @@ function App() {
 
   return (
     <div style={{ fontFamily: "sans-serif", padding: "2rem" }}>
-      <h1>🐳 Docker Boilerplate</h1>
+      <h1>Docker Boilerplate</h1>
       <p>Backend: <strong>{backendStatus}</strong></p>
       <p>MongoDB: <strong>{dbStatus}</strong></p>
     </div>

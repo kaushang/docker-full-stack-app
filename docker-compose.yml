@@ -1,32 +1,48 @@
-version: "3.8"
-
 services:
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"          # only nginx is exposed to the outside world
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - frontend
+      - backend
+
   frontend:
     build: ./client
-    ports:
-      - "3000:3000"
+    # no ports exposed anymore — nginx handles it
     volumes:
-      - ./client/src:/app/src  # hot reload — edit files locally, reflects in container
+      - ./client/src:/app/src
     depends_on:
       - backend
 
   backend:
     build: ./server
-    ports:
-      - "5000:5000"
+    # no ports exposed anymore — nginx handles it
     volumes:
-      - ./server/src:/app/src  # hot reload for backend too
+      - ./server/src:/app/src
     env_file:
       - .env
     depends_on:
       - mongo
 
   mongo:
-    image: mongo:6        # no custom Dockerfile needed, we use the official image directly
+    image: mongo:6
     ports:
       - "27017:27017"
     volumes:
-      - mongo_data:/data/db   # named volume so your data persists even if container restarts
+      - mongo_data:/data/db
+
+  mongo-express:
+    image: mongo-express:1.0.2-20
+    ports:
+      - "8081:8081"
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongo
+      ME_CONFIG_BASICAUTH: false
+    depends_on:
+      - mongo
 
 volumes:
   mongo_data:

@@ -7,20 +7,13 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Health check route
 app.get("/", (req, res) => {
   res.json({ message: "Backend is running!", status: "ok" });
 });
 
-// MongoDB connection status route
 app.get("/db-status", (req, res) => {
   const state = mongoose.connection.readyState;
-  const states = {
-    0: "disconnected",
-    1: "connected",
-    2: "connecting",
-    3: "disconnecting",
-  };
+  const states = { 0: "disconnected", 1: "connected", 2: "connecting", 3: "disconnecting" };
   res.json({ database: states[state] });
 });
 
