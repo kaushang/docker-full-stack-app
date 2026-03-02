@@ -44,7 +44,7 @@ The application runs as five isolated containers, all managed by Docker Compose:
 | nginx         | nginx:alpine            | Reverse proxy - single entry point on port 80  |
 | client        | Custom (node:20-alpine) | React frontend served via Vite                 |
 | server        | Custom (node:18-alpine) | Express REST API + background ping scheduler   |
-| mongo         | mongo:latest            | Database with named volume for persistence     |
+| mongo         | mongo:6                 | Database with named volume for persistence     |
 | mongo-express | mongo-express:1.0.2-20  | Visual database GUI accessible on port 8081    |
 
 ### Key Docker Concepts Demonstrated
@@ -85,8 +85,8 @@ Choose the section that applies to you:
 
 **Step 1 - Clone the repo**
 ```bash
-git clone https://github.com/yourusername/api-health-monitor.git
-cd api-health-monitor
+git clone https://github.com/kaushang/API-Health-Monitor.git
+cd API-Health-Monitor
 ```
 
 **Step 2 - Create your `.env` file**
@@ -127,8 +127,8 @@ This builds everything from source. Edit any file and the browser updates instan
 
 **Step 1 - Clone the repo**
 ```bash
-git clone https://github.com/yourusername/api-health-monitor.git
-cd api-health-monitor
+git clone https://github.com/kaushang/API-Health-Monitor.git
+cd API-Health-Monitor
 ```
 
 **Step 2 - Create your `.env` file**
